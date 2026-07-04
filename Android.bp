@@ -897,3 +897,52 @@ cc_prebuilt_library_shared {
     compile_multilib: "both",
     check_elf_files: false,
 }
+
+// Vendor copies of libprotobuf 3.9.1 and 21.12 for vendor blobs that link
+// them by name (e.g. Samsung universal2100). From LineageOS compat
+// (lineage-23.2): 3.9.1 from barbet-img-9269995.zip, 21.12 from
+// eos-img-13807685.zip (arm) and barbet-ap2a.240805.005.s4 (arm64).
+cc_prebuilt_library_shared {
+    name: "libprotobuf-cpp-full-3.9.1-vendorcompat",
+    stem: "libprotobuf-cpp-full-3.9.1",
+    ignore_max_page_size: true,
+    vendor: true,
+    strip: {
+        none: true,
+    },
+    shared_libs: [
+        "libc++",
+        "liblog",
+        "libz",
+    ],
+    target: {
+        android_arm64: {
+            srcs: ["libprotobuf/arm64/libprotobuf-cpp-full-3.9.1.so"],
+        },
+        android_arm: {
+            srcs: ["libprotobuf/arm/libprotobuf-cpp-full-3.9.1.so"],
+        },
+    },
+}
+
+cc_prebuilt_library_shared {
+    name: "libprotobuf-cpp-full-21.12-vendorcompat",
+    stem: "libprotobuf-cpp-full-21.12",
+    vendor: true,
+    strip: {
+        none: true,
+    },
+    shared_libs: [
+        "libc++",
+        "liblog",
+        "libz",
+    ],
+    target: {
+        android_arm: {
+            srcs: ["libprotobuf/arm/libprotobuf-cpp-full-21.12.so"],
+        },
+        android_arm64: {
+            srcs: ["libprotobuf/arm64/libprotobuf-cpp-full-21.12.so"],
+        },
+    },
+}
